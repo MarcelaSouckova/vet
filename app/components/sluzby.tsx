@@ -1,4 +1,3 @@
-// app/components/Sluzby.tsx
 "use client"
 import React from "react"
 import {
@@ -7,9 +6,7 @@ import {
   CalendarCheck2,
   HeartPulse,
   Cpu,
-  
   Scissors,
-  Home,
 } from "lucide-react"
 
 interface Service {

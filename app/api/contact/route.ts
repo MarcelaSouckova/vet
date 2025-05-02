@@ -1,4 +1,3 @@
-// app/api/contact/route.ts
 import nodemailer from "nodemailer"
 import { NextResponse } from "next/server"
 
@@ -24,13 +23,14 @@ export async function POST(request: Request) {
   try {
     await transporter.sendMail({
       from:    `"${name}" <${email}>`,
-      to:      process.env.EMAIL_USER,
+      to:      process.env.EMAIL_USER!,
       subject: `Nová zpráva od ${name}`,
       text:    `Jméno: ${name}\nE-mail: ${email}\n\n${message}`,
     })
     return NextResponse.json({ success: true })
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Email error:", err)
-    return NextResponse.json({ success: false, error: err.message }, { status: 500 })
+    const errorMessage = err instanceof Error ? err.message : String(err)
+    return NextResponse.json({ success: false, error: errorMessage }, { status: 500 })
   }
 }
